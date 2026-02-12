@@ -21,6 +21,7 @@ import MsgRead from './src/commands/msg-read.js'
 // Social commands
 import FollowList from './src/commands/follow-list.js'
 import FollowUpdate from './src/commands/follow-update.js'
+import TroutFollowDay from './src/commands/trout-follow-day.js'
 
 // Reaction commands
 import LikeEvent from './src/commands/like-event.js'
@@ -154,6 +155,12 @@ program
   .option('-p, --pubkeys <string>', 'Comma-separated pubkeys to follow')
   .option('-r, --relay <string>', 'Relay URL (optional)')
   .action(followUpdate.run)
+
+const troutFollowDay = new TroutFollowDay()
+program
+  .command('trout-follow-day')
+  .description('Get posts from trout\'s follows in the last 24 hours')
+  .action(troutFollowDay.run)
 
 // --- Reaction Commands ---
 
