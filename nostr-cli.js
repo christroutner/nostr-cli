@@ -230,4 +230,9 @@ program
   .option('-f, --from <string>', 'Format hint for hex input (pubkey, privkey, eventid)')
   .action(convert.run)
 
-program.parseAsync(process.argv)
+program.parseAsync(process.argv).then(() => {
+  // Force exit after command completes. WebSocket connections from nostr-tools
+  // and the nostr RelayPool can keep the Node.js event loop alive even after
+  // relay.close() / pool.close() are called.
+  process.exit(0)
+})
