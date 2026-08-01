@@ -1,4 +1,4 @@
-import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure'
+import { finalizeEvent, generateSecretKey, getPublicKey, getEventHash } from 'nostr-tools/pure'
 import { decode } from 'nostr-tools/nip19'
 import * as nip04 from 'nostr-tools/nip04'
 import { nip44 } from 'nostr-tools'
@@ -95,12 +95,17 @@ class MsgSend {
     const myPrivKeyBytes = hexToBytes(skHex)
 
     // Step 1: Create the rumor (unsigned, kind 14 for DMs).
-    const rumor = {
+    // The rumor has an id (event hash) but no signature.
+    const rumorTemplate = {
       kind: 14,
       created_at: Math.floor(Date.now() / 1000),
       tags: [],
       content: message,
       pubkey: myPubkey
+    }
+    const rumor = {
+      ...rumorTemplate,
+      id: getEventHash(rumorTemplate)
     }
 
     // Step 2: Encrypt rumor with recipient's key → seal (kind 13).
@@ -128,8 +133,9 @@ class MsgSend {
     }
     const giftWrap = finalizeEvent(giftWrapTemplate, randomSk)
 
-    // Step 4: Publish to the recipient's DM relays.
-    for (const relayUrl of dmRelays) {
+    // Step 4: Publish to the recipient's DM relays, plus fallback to default relays.
+    const publishRelays = [...new Set([...dmRelays, ...config.relays])]
+    for (const relayUrl of publishRelays) {
       try {
         await this.relayUtil.publishEvent(relayUrl, giftWrap)
         console.log(`  Published to DM relay: ${relayUrl}`)
