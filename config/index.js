@@ -1,9 +1,11 @@
 const config = {
   relays: [
-    'wss://relay.damus.io',
-    'wss://nostr-relay.psfoundation.info'
+    'wss://nostr.fullstackcash.net',
+    'wss://nos.lol',
+    'wss://relay.primal.net',
+    'wss://relay.damus.io'
   ],
-  defaultRelay: 'wss://nostr-relay.psfoundation.info',
+  defaultRelay: 'wss://nostr.fullstackcash.net',
   subscriptionTimeout: 5000
 }
 

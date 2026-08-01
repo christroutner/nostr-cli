@@ -36,6 +36,13 @@ import ChatSend from './src/commands/chat-send.js'
 // Utility commands
 import Convert from './src/commands/convert.js'
 
+// Profile commands
+import ProfilePublish from './src/commands/profile-publish.js'
+
+// Relay list commands
+import RelayListPublish from './src/commands/relay-list-publish.js'
+import DmRelayPublish from './src/commands/dm-relay-publish.js'
+
 const program = new Command()
 
 program
@@ -236,6 +243,40 @@ program
   .option('-i, --input <string>', 'Value to convert')
   .option('-f, --from <string>', 'Format hint for hex input (pubkey, privkey, eventid)')
   .action(convert.run)
+
+// --- Profile Commands ---
+
+const profilePublish = new ProfilePublish()
+program
+  .command('profile-publish')
+  .description('Publish or update profile metadata (Kind 0)')
+  .option('-n, --name <string>', 'Identity name')
+  .option('--display-name <string>', 'Display name')
+  .option('--about <string>', 'Profile description/bio')
+  .option('--picture <string>', 'Profile picture URL')
+  .option('--nip05 <string>', 'NIP-05 identifier (user@domain)')
+  .option('-r, --relay <string>', 'Relay URL (optional)')
+  .action(profilePublish.run)
+
+// --- Relay List Commands ---
+
+const relayListPublish = new RelayListPublish()
+program
+  .command('relay-list-publish')
+  .description('Publish NIP-65 relay list metadata (Kind 10002)')
+  .option('-n, --name <string>', 'Identity name')
+  .option('--relays <string>', 'Comma-separated relay URLs to advertise')
+  .option('-r, --relay <string>', 'Relay URL to publish to (optional)')
+  .action(relayListPublish.run)
+
+const dmRelayPublish = new DmRelayPublish()
+program
+  .command('dm-relay-publish')
+  .description('Publish NIP-17 DM inbox relay list (Kind 10050)')
+  .option('-n, --name <string>', 'Identity name')
+  .option('--relays <string>', 'Comma-separated relay URLs for DM inbox')
+  .option('-r, --relay <string>', 'Relay URL to publish to (optional)')
+  .action(dmRelayPublish.run)
 
 program.parseAsync(process.argv).then(() => {
   // Force exit after command completes. WebSocket connections from nostr-tools

@@ -166,6 +166,31 @@ Send a message to a chat room (Kind 42).
 node nostr-cli.js chat-send -n <identity> -e <channel-event-id> -m "Hello room!" [-r <relay-url>]
 ```
 
+### Profile
+
+#### `profile-publish`
+Publish or update profile metadata (Kind 0). Sets your display name, bio, picture, and NIP-05 identifier.
+
+```bash
+node nostr-cli.js profile-publish -n <identity> [--display-name "Display Name"] [--about "Bio"] [--picture <url>] [--nip05 <user@domain>] [-r <relay-url>]
+```
+
+### Relay Lists
+
+#### `relay-list-publish`
+Publish a NIP-65 relay list (Kind 10002). Advertises which relays your events can be found on. Uses the CLI's configured relays by default.
+
+```bash
+node nostr-cli.js relay-list-publish -n <identity> [--relays relay1,relay2,...] [-r <relay-url>]
+```
+
+#### `dm-relay-publish`
+Publish a NIP-17 DM inbox relay list (Kind 10050). Tells senders which relays to deliver encrypted direct messages to. Required for receiving DMs from NIP-17 compatible clients.
+
+```bash
+node nostr-cli.js dm-relay-publish -n <identity> [--relays relay1,relay2,...] [-r <relay-url>]
+```
+
 ### Utilities
 
 #### `convert`
@@ -182,10 +207,12 @@ Default relay configuration is in `config/index.js`:
 ```javascript
 {
   relays: [
-    'wss://relay.damus.io',
-    'wss://nostr-relay.psfoundation.info'
+    'wss://nostr.fullstackcash.net',
+    'wss://nos.lol',
+    'wss://relay.primal.net',
+    'wss://relay.damus.io'
   ],
-  defaultRelay: 'wss://nostr-relay.psfoundation.info',
+  defaultRelay: 'wss://nostr.fullstackcash.net',
   subscriptionTimeout: 5000
 }
 ```
