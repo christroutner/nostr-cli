@@ -87,14 +87,20 @@ Read posts filtered by topic.
 node nostr-cli.js post-read-topic -t <topic> [-l <limit>] [-r <relay-url>]
 ```
 
-### Direct Messages (NIP-04)
+### Direct Messages
 
 #### `msg-send`
-Send an encrypted direct message (Kind 4).
+Send an encrypted direct message. Defaults to NIP-04 (Kind 4). Use `--nip17` for NIP-17 gift-wrapped encryption (Kind 1059), which hides sender and content from relays.
 
 ```bash
+# NIP-04 (default)
 node nostr-cli.js msg-send -n <identity> -p <recipient-pubkey> -m "Secret message" [-r <relay-url>]
+
+# NIP-17 gift-wrapped (hides metadata from relays)
+node nostr-cli.js msg-send -n <identity> -p <recipient-pubkey> -m "Secret message" --nip17
 ```
+
+When using `--nip17`, the CLI looks up the recipient's DM relay list (kind:10050) and publishes to those relays automatically.
 
 #### `msg-read`
 Read and decrypt direct messages. Supports both NIP-04 (Kind 4) and NIP-17 gift-wrapped (Kind 1059) DMs.

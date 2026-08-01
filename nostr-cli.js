@@ -127,11 +127,12 @@ program
 const msgSend = new MsgSend()
 program
   .command('msg-send')
-  .description('Send an encrypted direct message (NIP-04, Kind 4)')
+  .description('Send an encrypted direct message (NIP-04 Kind 4, or NIP-17 gift-wrapped Kind 1059 with --nip17)')
   .option('-n, --name <string>', 'Identity name (sender)')
   .option('-p, --pubkey <string>', 'Recipient public key (hex or npub)')
   .option('-m, --message <string>', 'Message content')
-  .option('-r, --relay <string>', 'Relay URL (optional)')
+  .option('--nip17', 'Use NIP-17 gift-wrapped encryption (Kind 1059)')
+  .option('-r, --relay <string>', 'Relay URL (optional, NIP-04 only)')
   .action(msgSend.run)
 
 const msgRead = new MsgRead()
