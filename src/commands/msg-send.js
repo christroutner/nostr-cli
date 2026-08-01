@@ -1,4 +1,4 @@
-import { finalizeEvent, getPublicKey } from 'nostr-tools/pure'
+import { finalizeEvent } from 'nostr-tools/pure'
 import { decode } from 'nostr-tools/nip19'
 import * as nip04 from 'nostr-tools/nip04'
 import IdentityUtil from '../lib/identity-util.js'

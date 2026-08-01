@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import sinon from 'sinon'
 import Convert from '../../../src/commands/convert.js'
-import { npubEncode, nsecEncode, noteEncode } from 'nostr-tools/nip19'
+import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
 import { generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { bytesToHex } from '@noble/hashes/utils'
 

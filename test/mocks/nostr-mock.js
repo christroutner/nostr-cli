@@ -55,10 +55,10 @@ const mockReactionEvent = {
 
 const mockGiftWrappedEvent = {
   id: 'i'.repeat(64),
-  pubkey: 'j'.repeat(64),  // random ephemeral key
+  pubkey: 'j'.repeat(64), // random ephemeral key
   created_at: Math.floor(Date.now() / 1000),
   kind: 1059,
-  tags: [['p', 'b'.repeat(64)]],  // p-tagged to recipient
+  tags: [['p', 'b'.repeat(64)]], // p-tagged to recipient
   content: 'encrypted-gift-wrap-content',
   sig: 'k'.repeat(128)
 }

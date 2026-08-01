@@ -1,4 +1,3 @@
-import { getPublicKey } from 'nostr-tools/pure'
 import { decode } from 'nostr-tools/nip19'
 import * as nip04 from 'nostr-tools/nip04'
 import { nip44 } from 'nostr-tools'
@@ -82,7 +81,6 @@ class MsgRead {
       this.validateFlags(flags)
 
       const identity = this.identityUtil.loadIdentity(flags.name)
-      const sk = this.identityUtil.getSigningKey(flags.name)
       const myPubkey = identity.publicKey
       const limit = parseInt(flags.limit) || 10
       const relays = flags.relay ? [flags.relay] : config.relays
