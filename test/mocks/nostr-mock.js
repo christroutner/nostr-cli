@@ -53,6 +53,16 @@ const mockReactionEvent = {
   sig: 'd'.repeat(128)
 }
 
+const mockGiftWrappedEvent = {
+  id: 'i'.repeat(64),
+  pubkey: 'j'.repeat(64),  // random ephemeral key
+  created_at: Math.floor(Date.now() / 1000),
+  kind: 1059,
+  tags: [['p', 'b'.repeat(64)]],  // p-tagged to recipient
+  content: 'encrypted-gift-wrap-content',
+  sig: 'k'.repeat(128)
+}
+
 class MockRelay {
   constructor () {
     this.published = []
@@ -74,5 +84,6 @@ export {
   mockEncryptedEvent,
   mockContactEvent,
   mockReactionEvent,
+  mockGiftWrappedEvent,
   MockRelay
 }

@@ -97,7 +97,7 @@ node nostr-cli.js msg-send -n <identity> -p <recipient-pubkey> -m "Secret messag
 ```
 
 #### `msg-read`
-Read and decrypt direct messages.
+Read and decrypt direct messages. Supports both NIP-04 (Kind 4) and NIP-17 gift-wrapped (Kind 1059) DMs.
 
 ```bash
 node nostr-cli.js msg-read -n <identity> [-p <sender-pubkey>] [-l <limit>] [-r <relay-url>]
