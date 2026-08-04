@@ -33,6 +33,9 @@ import ChatCreate from './src/commands/chat-create.js'
 import ChatUpdate from './src/commands/chat-update.js'
 import ChatSend from './src/commands/chat-send.js'
 
+// Health commands
+import RelayHealth from './src/commands/relay-health.js'
+
 // Utility commands
 import Convert from './src/commands/convert.js'
 
@@ -235,6 +238,16 @@ program
   .option('-r, --relay <string>', 'Relay URL (optional)')
   .action(chatSend.run)
 
+// --- Health Commands ---
+
+const relayHealth = new RelayHealth()
+program
+  .command('relay-health')
+  .description('Check the health of a Nostr relay (connection, read, write, readback)')
+  .option('-n, --name <string>', 'Identity name to sign the test event (default: nostr-relay)')
+  .option('-r, --relay <string>', 'Relay URL (optional)')
+  .action(relayHealth.run)
+
 // --- Utility Commands ---
 
 const convert = new Convert()
@@ -282,6 +295,7 @@ program
 program.parseAsync(process.argv).then(() => {
   // Force exit after command completes. WebSocket connections from nostr-tools
   // and the nostr RelayPool can keep the Node.js event loop alive even after
-  // relay.close() / pool.close() are called.
-  process.exit(0)
+  // relay.close() / pool.close() are called. Respect exitCode so a failed
+  // health check returns a non-zero exit status for cron automation.
+  process.exit(process.exitCode || 0)
 })
